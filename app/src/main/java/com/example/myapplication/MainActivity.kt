@@ -18,6 +18,7 @@ import javax.crypto.spec.SecretKeySpec
 class MainActivity : AppCompatActivity() {
 
     private var buttonEncode : Button? = null
+    private var buttonDecode : Button? = null
     private var textDeCodec : EditText? = null
     private var textEncode : EditText? = null
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         buttonEncode = findViewById(R.id.btn_encode)
         textEncode = findViewById(R.id.tv_input)
         textDeCodec = findViewById(R.id.tv_output)
+        buttonDecode = findViewById(R.id.btn_decode)
 
         buttonEncode!!.setOnClickListener {
             val originalString = textEncode!!.text.toString()
@@ -51,11 +53,15 @@ class MainActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     job.join()
-                    Toast.makeText(this@MainActivity, "Finish", Toast.LENGTH_SHORT).show()
                     val timeSusses = System.currentTimeMillis() - time
                     Log.d("Time progress ", "$timeSusses")
                 }
             }
+        }
+
+        buttonDecode!!.setOnClickListener {
+            val decryptedString = AESCryptor.decrypt(textDeCodec!!.text.toString())
+            Toast.makeText(this, "$decryptedString", Toast.LENGTH_SHORT).show()
         }
 
     }

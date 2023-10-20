@@ -35,13 +35,17 @@ class MainActivity : AppCompatActivity() {
             val time = System.currentTimeMillis()
             GlobalScope.launch(Dispatchers.IO) {
                 val job = launch(Dispatchers.IO) {
-                    Log.d("Original String", originalString)
+//                    Log.d("Original String", originalString)
 
                     val encryptedString = AESCryptor.encrypt(originalString)
                     Log.d("Encrypted String", encryptedString)
+                   withContext(Dispatchers.Main){
+                       textDeCodec!!.setText(encryptedString)
+                   }
 
-                    val decryptedString = AESCryptor.decrypt(encryptedString)
-                    Log.d("Decrypted String", decryptedString)
+//                    val decryptedString = AESCryptor.decrypt(encryptedString)
+//                    Log.d("Decrypted String", decryptedString)
+
                 }
 
 
